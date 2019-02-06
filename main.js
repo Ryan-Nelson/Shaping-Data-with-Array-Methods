@@ -186,19 +186,25 @@ businesses.forEach(business => {
 // The data structure is shown below. Use that new data structure to display the agent 
 // with their company and phone number
 
+const agents = businesses.map(business => {
+  return {
+    fullname: `${business.purchasingAgent.nameFirst} ${business.purchasingAgent.nameLast}`,
+    company: business.companyName,
+    phoneNumber: business.phoneWork
+  }
+})
 
-// const agents = businesses.map(business => {
-//     return business.purchasingAgent,business
-// })
 
-// agents.forEach(agent => {
-//   outEl.innerHTML += `<h2>${agent.nameFirst} ${agent.nameLast}</h2>`;
-//   outEl.innerHTML += `<p>${agent.companyName}</p>`
-//   outEl.innerHTML += `<p>${agent.phoneWork}</p>`
-//   outEl.innerHTML += "<hr/>";
-  
+agents.forEach(agent => {
+  outEl.innerHTML += `
+<h2>${agent.fullname}</h2>
+<div>${agent.company}</div>
+<div>${agent.phoneNumber}</div>
+<hr/>
+`;
+});
 //   console.table(agents)
-// });
+
 
 //////////////////////.find////////////////////////////
 // const candies = [
@@ -226,8 +232,9 @@ document
         if (keyPressEvent.charCode === 13) {
             /* WHEN  USER PRESSES ENTER, FIND MATCHING BUSINESS */
             const foundBusiness = businesses.find(business =>
-                    business.companyName.includes(keyPressEvent.target.value)
-            );
+                  business.companyName.includes(keyPressEvent.target.value)
+          );
+
 
             outEl.innerHTML = `
                 <h2>
@@ -246,29 +253,83 @@ document
         }
     });
 
+    // Lightning Exercise 2: Refactor your code so that if the search text is found 
+    // in the first name, or last name, of any purchasing agent, show that agent.
+    
+
+document
+.querySelector("#agentSearch")
+.addEventListener("keypress", keyPressEvent => {
+    if (keyPressEvent.charCode === 13) {
+        /* WHEN  USER PRESSES ENTER, FIND MATCHING BUSINESS */
+        const foundAgent = agents.find(agent =>
+                agent.fullname.includes(keyPressEvent.target.value)
+        );
+
+        outEl.innerHTML = `
+            <h2>
+            ${foundAgent.fullname}
+            </h2>
+            <section>
+            ${foundAgent.company}
+            ${foundAgent.phoneNumber}
+            </section>
+        `;
+    }
+});
+
 
 ////////////////////.reduce//////////////////////////
 
-// businesses.forEach(business => {
-//   /* CALCULATE ORDER SUMMARY */
-//   let totalOrders = business.orders.reduce(
-//     (currentTotal, nextValue) => currentTotal += nextValue,
-//     0
-// )
+businesses.forEach(business => {
+  /* CALCULATE ORDER SUMMARY */
+  let totalOrders = business.orders.reduce(
+    (currentTotal, nextValue) => currentTotal += nextValue,
+    0
+)
 
-//   outEl.innerHTML += `
-//       <h2>
-//           ${business.companyName}
-//           ($${totalOrders})
-//       </h2>
-//       <section>
-//           ${business.addressFullStreet}
-//       </section>
-//       <section>
-//           ${business.addressCity},
-//           ${business.addressStateCode}
-//           ${business.addressZipCode}
-//       </section>
-//   `;
-//   outEl.innerHTML += "<hr/>";
-// });
+  outEl.innerHTML += `
+      <h2>
+          ${business.companyName}
+          ($${totalOrders})
+      </h2>
+      <section>
+          ${business.addressFullStreet}
+      </section>
+      <section>
+          ${business.addressCity},
+          ${business.addressStateCode}
+          ${business.addressZipCode}
+      </section>
+  `;
+  outEl.innerHTML += "<hr/>";
+});
+
+
+// Lightning Exercise 1: Use the reduce method on the following array to 
+// determine how much total rain fell last month.
+
+const monthlyRainfall = [23, 13, 27, 20, 20, 31, 33, 26, 19, 12, 14, 12, 10]
+
+const totalRainfall = monthlyRainfall.reduce(
+  (currentTotal, nextValue) => currentTotal += nextValue
+)
+
+// console.log(totalRainfall)
+
+// Lightning Exercise 2: Use the reduce method on the following array to build a sentence.
+
+const words = ["The", "quick", "brown", "fox", "jumped", "over", "the", "lazy", "dog"]
+
+const sentence = words.reduce(
+     (sentenceTaco, nextTacoWord) => sentenceTaco += `${nextTacoWord} `, ""
+)
+
+// console.log(sentence)
+
+////////////////////Practice///////////////////
+
+// Array to contain all the big spenders
+const bigSpenders = businesses.filter(business => {
+
+})

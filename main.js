@@ -327,9 +327,41 @@ const sentence = words.reduce(
 
 // console.log(sentence)
 
-////////////////////Practice///////////////////
+////////////////////Practice: Big Spenders///////////////////
 
 // Array to contain all the big spenders
 const bigSpenders = businesses.filter(business => {
-
+  let bigSpender = false
+  business.orders.forEach(order => {
+      if (order > 8000) {
+        //it's over 8000!!!!!!!!!!!!!
+          bigSpender = true
+      }
+  });
+  return bigSpender
 })
+
+// console.log({ bigSpenders })
+
+////////////////////Practice: Solar System//////////////////////////
+
+
+const planets = ["mercury", "venus", "earth", "mars", "jupiter", "saturn", "uranus", "neptune"]
+
+/*
+    Use the forEach method to add the name of each planet
+    to a section element in your HTML with an id of "planets".
+    Use string templates to construct the DOM elements.
+*/
+
+const planetEl = document.querySelector("planets")
+const planetHTML = (planetTaco) => {
+    planetEl.innerHTML = ""
+    planetTaco.forEach(taco => {
+        planetEl.innerHTML += `
+        <section>${taco}</section>
+        `
+    });
+}
+PlanetHTML(planets)
+
